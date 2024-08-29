@@ -2,8 +2,8 @@
 > 스팀 게임 아카이빙 및 커뮤니티 사이트<br>
 > 개발기간: 24.05.20~24.06.14(4주)
 
-# 배포 주소
-http://34.64.52.132
+![image](https://github.com/user-attachments/assets/83ac3d9f-99ae-42a4-a428-24244d4c9b59)
+
 
 # 프로젝트 소개
 1. 스팀 에서 제공하는 API 활용 (https://steamapi.xpaw.me/)
@@ -51,9 +51,17 @@ http://34.64.52.132
 <img src="architecture.png">
 
 
-# ERD
+# ERD 및 와이어프레임
+![image](https://github.com/user-attachments/assets/12182b3c-ceb1-4525-bffe-45af4bc06b2f)
+![image](https://github.com/user-attachments/assets/9a2a4ae7-8cde-4f86-8cde-720833d7cd19)
+
 
 # 화면 구성
+![image](https://github.com/user-attachments/assets/f173cd12-fe5b-4167-93c4-90033e54f418)
+![image](https://github.com/user-attachments/assets/bf42228c-cf9f-4a0a-b2ce-f071612e59eb)
+![image](https://github.com/user-attachments/assets/a987d918-9c7d-4fdd-b4f4-4a0a68a8ae65)
+![image](https://github.com/user-attachments/assets/361e3341-2055-46d7-ad0b-17e58e962c65)
+
 
 # 개발팀 소개
 <table>
@@ -93,35 +101,34 @@ http://34.64.52.132
   </tr>
 </table>
 
-✔ 김찬혁
-- Java 및 Springboot를 활용한 Backend REST API 서버 구현
-- Docker 통한 프로젝트 빌드 및 배포
-- Jenkins를 활용한 CI/CD 구축
-- 프로젝트 발표 및 문서화
-
-✔ 강주연
-- Java 및 SpingBoot를 활용한 Backend REST API 서버 구현
-- QueryDSL 을 통한 데이터 관리
-- DB 관리를 위한 phpMyAdmin 구축
-
-✔ 문선민
-- Java 및 Springboot를 활용한 Backend REST API 서버 구현
-- Spring Security 를 활용한 JWT 기능 구현
-- Recoil, Cookie를 통한 로그인/로그아웃 및 유저 상태 관리
-- OAuth2 를 활용한 소셜 로그인 구현
-- Steam OpenID 를 통한 Steam 계정 연동 구현
-
-✔ 조규은
-- Java 및 Springboot를 활용한 Backend REST API 서버 구현
-- Steam API 활용한 게임 데이터 추출
-- MySQL DB 관리 및 스케줄링
-- grafana, Prometheus 를 통한 모니터링
-- AOP 를 활용한 Logging 작업
 
 ✔ 김동근
-- Java 및 Springboot를 활용한 Backend REST API 서버 구현
-- firebase 를 통한 이미지 데이터 관리
-- QueryDSL 을 통한 데이터 관리
+- Java 및 Springboot를 활용한 Backend REST API CRUD 구현
+- firebase 외부 저장소를 사용하여 데이터베이스에 쓸모없는 공간 낭비 하지 않는 설계
+- QueryDSL 를 통해 동시에 API 호출이 3~4회 날아가야 하는 과정이 1번으로 압축되고 조회시간이 5초 > 2초로 향상
+- Swagger 문서화를 통해 프론트파트 인원 API 이해, 적용하는 시간 30min > 5min 으로 단축
 
-✔ 황하연
-- React, Next.js을 사용한 Frontend 페이지 구현
+- React, Typescript, NextJs 활용한 커뮤니티 페이지 제작
+- Axios 를 통해 API 호출 및 데이터 처리
+
+# 리펙토링
+- 기존 VM 배포 -> AWS EC2 배포 (현재 개인적인 사유로 중단)
+![image](https://github.com/user-attachments/assets/14651a68-761b-4160-adeb-aecacdae3787)
+
+- CI/CD Jenkins를 통해 파이프라인 구축/배포 자동화
+![image](https://github.com/user-attachments/assets/5cb46f75-1be0-49e4-a49f-751703000bee)
+
+
+# 트러블슈팅
+- 문제 : "Could not write Json: failed to lazily initialize a collection of role" 지연 로딩 문제
+- 문제 발생 이유 : QueryDSL로 가지고 올때 연관관계 지어져 있는 테이블을 모두 같이 가지고 와야 하는데 member에 관한 테이블이 같이 조회되지 않았고 member의 LAZY 전략에 의해 지연 로딩에 관한 문제가 발생한 것
+- 해결 : fetchJoin을 같이 해주어 동시에 출력이 될 수 있도록 함
+- 교훈 : QueryDSL도 좋지만 도메인 복잡성 증가 시 초기 계획이 중요하며 꼼꼼하게 사용하는 것이 좋을것 같다..
+
+# 기억에 남는 코드
+![image](https://github.com/user-attachments/assets/fd193883-79b7-4fa1-8ec0-febac27dc76a)
+![image](https://github.com/user-attachments/assets/e69eec90-f106-448e-9ec3-9be37c942dd5)
+
+- Firebase라는 외부 저장소를 사용하여 이미지 업로드를 하고 업로드 된 이미지의 url만 가져오기 때문에 데이터베이스 입장에선 공간 낭비를 하지 않을 수 있었다.
+- MultipartFile로 외부와 첨부파일로 연결되는 과정이 기억에 남았다.
+  
